@@ -4,7 +4,7 @@ A local cooking school has partnered with food bloggers to create an interactive
 
 Your task is to build a fully functional Recipe Discovery & Meal Planning application using React. You must create the entire application from the ground up, demonstrating mastery of functional components, hooks, props, event handling, routing, conditional rendering, and multimedia integration. The application must be well-organized, styled professionally, and provide an excellent user experience.
 
-##Project Overview: Recipe Discovery & Meal Planning App
+## Project Overview: Recipe Discovery & Meal Planning App
 **Core Features Required:**
 - Browse and search recipes by category, cuisine, or ingredients
 - View detailed recipe information with ingredients and instructions
