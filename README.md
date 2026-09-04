@@ -1,17 +1,16 @@
-# React_Recipe_App
+# React + Vite
 
-A local cooking school has partnered with food bloggers to create an interactive recipe discovery and meal planning application. They need a modern, responsive React application that allows users to browse recipes, plan weekly meals, watch cooking tutorials, and save their favorite dishes. You've been hired to build this application from scratch, demonstrating your proficiency in React fundamentals, component architecture, state management, and modern JavaScript practices.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Your task is to build a fully functional Recipe Discovery & Meal Planning application using React. You must create the entire application from the ground up, demonstrating mastery of functional components, hooks, props, event handling, routing, conditional rendering, and multimedia integration. The application must be well-organized, styled professionally, and provide an excellent user experience.
+Currently, two official plugins are available:
 
-## Project Overview: Recipe Discovery & Meal Planning App
-**Core Features Required:**
-- Browse and search recipes by category, cuisine, or ingredients
-- View detailed recipe information with ingredients and instructions
-- Watch embedded cooking tutorial videos
-- Listen to cooking tips audio guides
-- Add recipes to a weekly meal planner (Monday-Sunday)
-- Mark recipes as favorites
-- Filter and sort recipes dynamically
-- Responsive navigation with multiple routes
-- Interactive user interface with smooth transitions
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
