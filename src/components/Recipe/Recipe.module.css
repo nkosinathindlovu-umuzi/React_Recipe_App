@@ -1,0 +1,137 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.cardImageWrap {
+  position: relative;
+  margin: calc(var(--space-3) * -1) calc(var(--space-3) * -1) var(--space-3);
+}
+
+.cardImage {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background-color: var(--color-border);
+}
+
+.favoriteBtn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  background-color: rgba(255, 250, 240, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.favoriteBtn:hover {
+  transform: scale(1.08);
+}
+
+.favoriteActive {
+  color: var(--color-danger);
+}
+
+.meta {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.filterBar select {
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.detailPage {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.detailHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.detailImage {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background-color: var(--color-border);
+}
+
+.detailActions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.detailBody {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.detailBody li {
+  margin-bottom: var(--space-1);
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.modalForm label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-weight: 500;
+}
+
+.modalForm select {
+  padding: 0.6rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.notFoundInline {
+  text-align: center;
+  padding: var(--space-6) 0;
+}
+
+/* Tablet and up: image sits beside the title/meta */
+@media (min-width: 768px) {
+  .detailHeader {
+    flex-direction: row;
+  }
+
+  .detailImage {
+    width: 280px;
+    height: 200px;
+    flex-shrink: 0;
+  }
+
+  .detailBody {
+    grid-template-columns: 1fr 1fr;
+  }
+}
