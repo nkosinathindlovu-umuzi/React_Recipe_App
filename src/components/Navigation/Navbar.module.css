@@ -1,0 +1,92 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-3);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-primary-dark);
+}
+
+.hamburger {
+  display: block;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2);
+}
+
+.linksOpen {
+  display: flex;
+}
+
+.link {
+  position: relative;
+  padding: var(--space-2) var(--space-3);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+  border-radius: var(--radius);
+}
+
+.link:hover {
+  background-color: var(--color-bg);
+}
+
+.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.badge {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  font-size: 0.7rem;
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  margin-left: var(--space-1);
+}
+
+/* Tablet and up: horizontal nav, no hamburger */
+@media (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    border: none;
+    padding: 0;
+    gap: var(--space-2);
+  }
+}
