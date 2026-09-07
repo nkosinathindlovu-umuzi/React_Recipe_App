@@ -43,12 +43,18 @@ See `planning/PLANNING.md` for the full component hierarchy and data-flow diagra
 
 ## Installation
 
+Clone the Repository to your local machine
+Locate the root folder on your terminal(project main folder) `/React_Recipe_App/`
+And then run these commands(inside the project folder):
+
 ```bash
 npm install
 npm run dev
 ```
 
-Then open the local URL Vite prints (typically `http://localhost:5173`).
+Once `npm run dev` command completed running, Then open the local URL 
+Vite prints (typically `http://localhost:5173`) on your broswer(preferably Chrome browser) 
+and then start using the app.
 
 ## Project Structure
 
