@@ -34,6 +34,14 @@ export function difficultyEmoji(difficulty) {
   return "🔴";
 }
 
+// Badge colour for each difficulty, used for an inline style on RecipeCard.
+// White text is at least 5:1 on all three colours.
+export function difficultyColour(difficulty) {
+  if (difficulty === "easy") return "#2E7D32";
+  if (difficulty === "medium") return "#9A5B00";
+  return "#B3261E";
+}
+
 // The seven days the meal planner works across, in order.
 export const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 

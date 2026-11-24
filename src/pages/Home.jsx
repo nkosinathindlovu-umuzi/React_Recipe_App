@@ -19,7 +19,7 @@ const Home = ({ recipes, favorites, onFavoriteToggle }) => {
       </section>
 
       <AudioPlayer
-        audioUrl="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"
+        audioUrl="/assets/audio/curry-leaves-tip.mp3"
         title="Cooking Tip: Building Flavour with Curry Leaves"
       />
 

@@ -3,7 +3,7 @@ import styles from "./UI.module.css";
 
 // Controlled search input. Value and change handler both come from the
 // parent (RecipesPage) — this component holds no state of its own.
-const SearchBar = ({ value, onChange, placeholder }) => {
+const SearchBar = ({ value, onChange, placeholder = "Search recipes…" }) => {
   return (
     <input
       type="text"
@@ -21,10 +21,6 @@ SearchBar.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-};
-
-SearchBar.defaultProps = {
-  placeholder: "Search recipes…",
 };
 
 export default SearchBar;

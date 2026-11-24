@@ -1,3 +1,45 @@
 main {
   min-height: 60vh;
 }
+
+/* Shown when the saved favourites or meal plan could not be read */
+.storage-warning {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  max-width: 1100px;
+  margin: var(--space-3) auto 0;
+  padding: var(--space-2) var(--space-3);
+  background-color: #fdecea;
+  color: #7a1f12;
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius);
+}
+
+.storage-warning p {
+  margin: 0;
+}
+
+/* Shown instead of the pages when the recipes could not load */
+.load-error {
+  max-width: 600px;
+  margin: var(--space-4) auto;
+  padding: var(--space-4);
+  text-align: center;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius);
+}
+
+.storage-warning button,
+.load-error button {
+  background-color: var(--color-danger);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: var(--space-1) var(--space-3);
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -5,7 +5,7 @@ import styles from "./Recipe.module.css";
 
 // Renders an array of RecipeCards. Kept dumb on purpose: it just maps and
 // forwards callbacks, so RecipesPage/FavoritesPage/Home can all reuse it.
-const RecipeList = ({ recipes, favorites, onFavoriteToggle }) => {
+const RecipeList = ({ recipes, favorites = [], onFavoriteToggle = () => {} }) => {
   // Conditional rendering: empty state when there's nothing to show
   if (recipes.length === 0) {
     return <EmptyState message="No recipes found. Try a different search or filter." />;
@@ -29,11 +29,6 @@ RecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
   favorites: PropTypes.array,
   onFavoriteToggle: PropTypes.func,
-};
-
-RecipeList.defaultProps = {
-  favorites: [],
-  onFavoriteToggle: () => {},
 };
 
 export default RecipeList;

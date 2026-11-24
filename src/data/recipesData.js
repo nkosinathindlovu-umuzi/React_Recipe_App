@@ -1,6 +1,6 @@
 // Sample recipe data for Midlands Table.
-// Images/video/audio point at placeholder paths in public/assets — swap in real
-// media later. cookTime is in minutes.
+// Each recipe's image and tutorial video live in public/assets (images/ and videos/).
+// cookTime is in minutes.
 
 export const recipesData = [
   {

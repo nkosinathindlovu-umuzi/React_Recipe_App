@@ -10,7 +10,7 @@ const links = [
   { to: "/favorites", label: "Favorites" },
 ];
 
-const Navbar = ({ favoritesCount }) => {
+const Navbar = ({ favoritesCount = 0 }) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -59,10 +59,6 @@ const Navbar = ({ favoritesCount }) => {
 
 Navbar.propTypes = {
   favoritesCount: PropTypes.number,
-};
-
-Navbar.defaultProps = {
-  favoritesCount: 0,
 };
 
 export default Navbar;

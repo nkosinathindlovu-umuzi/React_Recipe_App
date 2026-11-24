@@ -14,8 +14,13 @@ const RecipeDetail = ({ recipes, favorites, onFavoriteToggle, onAddMeal }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(daysOfWeek[0]);
-  const [selectedMeal, setSelectedMeal] = useState(meals[0]);
+  // Complex state: the day and the meal chosen in the "Add to meal plan" form,
+  // kept together in one object because they are always used together.
+  const [planChoice, setPlanChoice] = useState({ day: daysOfWeek[0], meal: meals[0] });
+
+  const updatePlanChoice = (name, value) => {
+    setPlanChoice((previous) => ({ ...previous, [name]: value }));
+  };
 
   const recipe = recipes.find((r) => r.id === parseInt(id));
   const isFavorite = recipe ? favorites.some((f) => f.id === recipe.id) : false;
@@ -32,7 +37,7 @@ const RecipeDetail = ({ recipes, favorites, onFavoriteToggle, onAddMeal }) => {
 
   const handleConfirmAddMeal = (e) => {
     e.preventDefault();
-    onAddMeal(selectedDay, selectedMeal, recipe);
+    onAddMeal(planChoice.day, planChoice.meal, recipe);
     setShowModal(false);
   };
 
@@ -50,6 +55,8 @@ const RecipeDetail = ({ recipes, favorites, onFavoriteToggle, onAddMeal }) => {
             {recipe.cuisine} · {formatCookTime(recipe.cookTime)} · Serves {recipe.servings || 4} ·{" "}
             {difficultyEmoji(recipe.difficulty)} {recipe.difficulty}
           </p>
+          {/* Conditional section with &&: only shows when this recipe is a favourite */}
+          {isFavorite && <p className={styles.savedNote}>❤ Saved in your favourites</p>}
           <div className={styles.detailActions}>
             <Button
               variant={isFavorite ? "danger" : "primary"}
@@ -84,7 +91,7 @@ const RecipeDetail = ({ recipes, favorites, onFavoriteToggle, onAddMeal }) => {
         </section>
       </div>
 
-      <VideoPlayer videoUrl={recipe.videoUrl} title={`${recipe.title} — cooking tutorial`} />
+      <VideoPlayer key={recipe.videoUrl} videoUrl={recipe.videoUrl} title={`${recipe.title} — cooking tutorial`} />
 
       {/* Conditional section: modal only mounted while showModal is true */}
       {showModal && (
@@ -92,7 +99,7 @@ const RecipeDetail = ({ recipes, favorites, onFavoriteToggle, onAddMeal }) => {
           <form onSubmit={handleConfirmAddMeal} className={styles.modalForm}>
             <label>
               Day
-              <select value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+              <select value={planChoice.day} onChange={(e) => updatePlanChoice("day", e.target.value)}>
                 {daysOfWeek.map((day) => (
                   <option key={day} value={day}>
                     {capitalize(day)}
@@ -102,7 +109,7 @@ const RecipeDetail = ({ recipes, favorites, onFavoriteToggle, onAddMeal }) => {
             </label>
             <label>
               Meal
-              <select value={selectedMeal} onChange={(e) => setSelectedMeal(e.target.value)}>
+              <select value={planChoice.meal} onChange={(e) => updatePlanChoice("meal", e.target.value)}>
                 {meals.map((meal) => (
                   <option key={meal} value={meal}>
                     {capitalize(meal)}

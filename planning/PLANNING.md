@@ -82,10 +82,14 @@ App.jsx (top-level state: recipes, favorites, mealPlan, searchTerm, category)
 ## State Management Strategy
 
 - `useState` in `App.jsx`: `recipes`, `favorites` (array), `mealPlan` (object keyed by day),
-  `isLoading`, `error`.
-- `useState` locally in `RecipesPage`: `searchTerm`, `category`, `cuisine`, `difficulty`.
-- `useEffect` #1: load `recipesData` into state on mount (short delay to show a real
-  loading state). `useEffect` #2: read `favorites`/`mealPlan` from `localStorage` on mount.
-  `useEffect` #3: write them back to `localStorage` on change.
+  `isLoading`, `error`, `storageMessage`. `favorites` and `mealPlan` are read from
+  `localStorage` in their `useState` initialisers (through `loadSavedData()` in
+  `utils/storage.js`), so they are restored before the first render.
+- `useState` locally in `RecipesPage`: one `filters` object (`searchTerm`, `category`,
+  `cuisine`, `difficulty`). `RecipeDetail` keeps a `planChoice` object (`day`, `meal`) for
+  the "Add to meal plan" form.
+- `useEffect` #1: load the recipes with `loadRecipes()`, which checks the data and can fail
+  (then the error message and a "Try again" button show). `useEffect` #2 and #3: write
+  `favorites` and `mealPlan` back to `localStorage` whenever they change.
 - Favorites and meal plan are complex state (array/object), updated immutably with spread
   syntax (`[...favorites, recipe]`, `{...mealPlan, monday: {...}}`).

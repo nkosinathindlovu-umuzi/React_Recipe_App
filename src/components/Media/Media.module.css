@@ -19,3 +19,17 @@
 .audioContainer audio {
   width: 100%;
 }
+
+/* Thin bar under the player. Its width is an inline style set from state */
+.progressTrack {
+  height: 6px;
+  background-color: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 999px;
+}

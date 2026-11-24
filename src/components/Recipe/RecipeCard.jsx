@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "../UI/Button.jsx";
 import Card from "../UI/Card.jsx";
-import { formatCookTime, difficultyEmoji } from "../../utils/helpers.js";
+import { formatCookTime, difficultyEmoji, difficultyColour } from "../../utils/helpers.js";
 import styles from "./Recipe.module.css";
 
 // Recipe summary shown in RecipeList, Home's "today's picks", and FavoritesPage.
 // This is one of our 5+ reusable components — used in at least three contexts.
-const RecipeCard = ({ recipe, isFavorite, onFavoriteToggle }) => {
+const RecipeCard = ({ recipe, isFavorite = false, onFavoriteToggle = () => {} }) => {
   return (
     <Card>
       <div className={styles.cardImageWrap}>
@@ -23,6 +23,10 @@ const RecipeCard = ({ recipe, isFavorite, onFavoriteToggle }) => {
       </div>
 
       <h3>{recipe.title}</h3>
+      {/* Inline style #1: the badge colour comes from the recipe's difficulty prop */}
+      <span className={styles.difficultyBadge} style={{ backgroundColor: difficultyColour(recipe.difficulty) }}>
+        {recipe.difficulty}
+      </span>
       <p className={styles.meta}>
         {/* Function called within JSX for data transformation */}
         Cook time: {formatCookTime(recipe.cookTime)} · Serves {recipe.servings || 4} ·{" "}
@@ -47,11 +51,6 @@ RecipeCard.propTypes = {
   }).isRequired,
   isFavorite: PropTypes.bool,
   onFavoriteToggle: PropTypes.func,
-};
-
-RecipeCard.defaultProps = {
-  isFavorite: false,
-  onFavoriteToggle: () => {},
 };
 
 export default RecipeCard;

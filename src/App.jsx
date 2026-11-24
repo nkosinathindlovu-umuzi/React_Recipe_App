@@ -9,54 +9,66 @@ import MealPlannerPage from "./pages/MealPlannerPage.jsx";
 import FavoritesPage from "./pages/FavoritesPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import RecipeDetail from "./components/Recipe/RecipeDetail.jsx";
-import { recipesData } from "./data/recipesData.js";
-import { daysOfWeek } from "./utils/helpers.js";
+import { loadRecipes } from "./utils/loadRecipes.js";
+import { loadSavedData, saveToStorage, emptyWeek } from "./utils/storage.js";
 import "./App.css";
 
-// Builds an empty week: { monday: {}, tuesday: {}, ... }
-const emptyWeek = () => Object.fromEntries(daysOfWeek.map((day) => [day, {}]));
+// App is an arrow-function component, like every other component in the app.
+const App = () => {
+  // Read the saved favourites and meal plan ONCE, before the first render.
+  // Doing it here (instead of in a useEffect) means the save effects below never
+  // run with empty values first, so StrictMode can not wipe the saved data.
+  const [startData] = useState(loadSavedData);
 
-function App() {
-  // Top-level state — lifted up because multiple pages need to read/change it
+  // Top-level state, lifted up because several pages need to read/change it
   const [recipes, setRecipes] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [mealPlan, setMealPlan] = useState(emptyWeek());
+  const [favorites, setFavorites] = useState(startData.favorites);
+  const [mealPlan, setMealPlan] = useState(startData.mealPlan);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [storageMessage, setStorageMessage] = useState(startData.problem);
+  // changing this number makes the load effect run again ("Try again" button)
+  const [loadAttempt, setLoadAttempt] = useState(0);
 
-  // useEffect #1: load recipe data on mount (simulated fetch delay so the
-  // Loading state is genuinely visible, not just a flash)
+  // useEffect #1: load the recipes. loadRecipes() can really fail (missing or
+  // incomplete data), and then we show the error message instead of the pages.
   useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        setRecipes(recipesData);
-        setIsLoading(false);
-      } catch {
-        setError("Could not load recipes.");
-        setIsLoading(false);
-      }
-    }, 400);
-    return () => clearTimeout(timer);
-  }, []);
+    let cancelled = false;
 
-  // useEffect #2: read favorites + meal plan from localStorage on mount
+    loadRecipes()
+      .then((data) => {
+        if (!cancelled) setRecipes(data);
+      })
+      .catch((loadError) => {
+        if (!cancelled) setError(loadError.message);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    // if the component unmounts (or StrictMode re-runs the effect) we ignore the old result
+    return () => {
+      cancelled = true;
+    };
+  }, [loadAttempt]);
+
+  // useEffect #2: save favourites whenever they change.
+  // saveToStorage catches errors (storage full or blocked), so a failed save
+  // can not crash the app.
   useEffect(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-    if (savedFavorites) setFavorites(JSON.parse(savedFavorites));
-
-    const savedMealPlan = localStorage.getItem("mealPlan");
-    if (savedMealPlan) setMealPlan(JSON.parse(savedMealPlan));
-  }, []);
-
-  // useEffect #3: persist favorites whenever they change
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    saveToStorage("favorites", favorites);
   }, [favorites]);
 
-  // useEffect #4 (bonus, beyond the 3 minimum): persist meal plan too
+  // useEffect #3: save the meal plan whenever it changes
   useEffect(() => {
-    localStorage.setItem("mealPlan", JSON.stringify(mealPlan));
+    saveToStorage("mealPlan", mealPlan);
   }, [mealPlan]);
+
+  const handleRetry = () => {
+    setError(null);
+    setIsLoading(true);
+    setLoadAttempt((attempt) => attempt + 1);
+  };
 
   // Child-to-parent communication: RecipeCard/RecipeDetail call this via props
   const handleFavoriteToggle = (recipe) => {
@@ -91,11 +103,27 @@ function App() {
       <Navbar favoritesCount={favorites.length} />
 
       <main>
+        {/* Conditional section with &&: only shows when saved data was broken or could not be saved */}
+        {storageMessage && (
+          <div className="storage-warning" role="alert">
+            <p>{storageMessage}</p>
+            <button type="button" onClick={() => setStorageMessage("")}>
+              Dismiss
+            </button>
+          </div>
+        )}
+
         {/* Conditional rendering: loading / error / content states */}
         {isLoading ? (
           <Loading />
         ) : error ? (
-          <p role="alert">{error}</p>
+          <div className="load-error" role="alert">
+            <h1>Sorry, the recipes could not load</h1>
+            <p>{error}</p>
+            <button type="button" onClick={handleRetry}>
+              Try again
+            </button>
+          </div>
         ) : (
           <Routes>
             <Route
